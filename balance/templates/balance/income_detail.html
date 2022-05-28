@@ -1,0 +1,17 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} Income detail {% endblock %}
+{% block page_heading %} Income detail {% endblock page_heading %}
+
+{% block content %}
+
+Income name: {{ object.income_name }}</br>
+Income value: {{ object.income_value }}</br>
+Comment: {{ object.comment }}</br>
+Income date: {{ object.income.date }}</br>
+Category: {{ object.income_category }}</br></p>
+
+<a href="{% url 'income_delete' income.id %}" class="btn btn-primary">Delete income</a>
+<a href="{% url 'income_update' income.id %}" class="btn btn-primary">Edit income</a>
+<a href="{% url 'income_list' %}" class="btn btn-primary">Back to income list</a>
+
+{% endblock content %}

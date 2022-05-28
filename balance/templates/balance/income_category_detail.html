@@ -1,0 +1,27 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} Category detail {% endblock %}
+{% block page_heading %} Category detail {% endblock page_heading %}
+
+{% block content %}
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>Income</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for income in incomecategory.income_set.all %}
+    <tr>
+        <td>{{ income }}</td>
+        <td>{{ income.income_value }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'income_category_delete' incomecategory.id %}" class="btn btn-primary">Delete category</a>
+<a href="{% url 'income_category_update' incomecategory.id %}" class="btn btn-primary">Edit category</a>
+<a href="{% url 'income_category_list' %}" class="btn btn-primary">Back to category list</a>
+
+{% endblock content %}

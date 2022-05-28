@@ -1,0 +1,15 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} Categories {% endblock %}
+{% block page_heading %} Categories list {% endblock page_heading %}
+
+{% block content %}
+
+<div class="list-group">
+    {% for category in sum_of_expenses_in_category %}
+    <a href="{% url 'expense_category_detail' category.id %}" class="list-group-item list-group-item-action">{{ category }}{{ category.expense__expense_value__sum }}</a>
+            {% empty %}
+        No categories yet
+        {% endfor %}
+</div>
+
+{% endblock content %}

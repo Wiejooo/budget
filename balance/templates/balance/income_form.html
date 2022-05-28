@@ -1,0 +1,16 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} Add income {% endblock %}
+{% block page_heading %} Add new income {% endblock page_heading %}
+
+{% block content %}
+
+<div class="form-group">
+    <form method="post" action="" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Save">
+        <a href="{% url 'income_list' %}" class="btn btn-primary">Cancel</a><br>
+    </form>
+</div>
+
+{% endblock content %}

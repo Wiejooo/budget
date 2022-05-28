@@ -1,0 +1,14 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} Confirm {% endblock %}
+{% block page_heading %} Confirm deleting {% endblock page_heading %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    {{ form }}
+    <input type="submit" class="btn btn-primary" value="Confirm">
+    <a href="{% url 'income_category_detail' incomecategory.id %}" class="btn btn-primary">Cancel</a>
+</form>
+{% endblock content %}
+

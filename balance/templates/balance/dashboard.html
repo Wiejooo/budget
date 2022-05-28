@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+{% load static %}
+{% load subtraction %}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Balancee</title>
+    {% load static %}
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' %}"
+          rel="stylesheet">
+
+    <link href="{% static '/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<div id="wrapper">
+
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Balancee<sup></sup></div>
+        </a>
+
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+
+        <div class="sidebar-heading">
+            Interface
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Expenses</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Actions:</h6>
+                    <a class="collapse-item" href="{% url 'expense_create' %}">Add new expense</a>
+                    <a class="collapse-item" href="{% url 'expense_list' %}">Expenses list</a>
+                    <a class="collapse-item" href="{% url 'expense_category_list' %}">Categories of expenses</a>
+                    <a class="collapse-item" href="{% url 'expense_category_create' %}">Add new category</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Incomes</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Actions:</h6>
+                    <a class="collapse-item" href="{% url 'income_create' %}">Add new income</a>
+                    <a class="collapse-item" href="{% url 'income_list' %}">Incomes list</a>
+                    <a class="collapse-item" href="{% url 'income_category_list' %}">Categories of incomes</a>
+                    <a class="collapse-item" href="{% url 'income_category_create' %}">Add new category</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+
+
+        <div id="content">
+
+
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user }}</span>
+                            <img class="img-profile rounded-circle"
+                                 src="/static/img/undraw_profile.svg">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'change_password' %}">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Change password
+                            </a>
+                            <a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="container-fluid">
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-lg font-weight-bold text-danger text-uppercase mb-1">
+                                            TOTAL EXPENSES
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ all_expenses_value }}
+                                            PLN
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-lg font-weight-bold text-success text-uppercase mb-1">
+                                            TOTAL INCOMES
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ all_incomes_value }}
+                                            PLN
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                            BALANCE
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ all_incomes_value|sub:all_expenses_value }} PLN
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Expenses Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="expensesBarChart"></canvas>
+                                    </div>
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    <script>
+                                        labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                        data = {
+                                          labels: labels,
+                                          datasets: [{
+                                            label: "Expenses",
+                                            data: [{{ january_expenses }}, {{ february_expenses }}, {{ march_expenses }}, {{ april_expenses }}, {{ may_expenses }}, {{ june_expenses }},
+                                            {{ july_expenses }}, {{ august_expenses }}, {{ september_expenses }}, {{ october_expenses }}, {{ november_expenses }}, {{ december_expenses }}],
+                                            backgroundColor: ['#9E3E3C', '#A3463E', '#AC5743', '#A74F40', '#B06045', '#B46A48', '#B8734B', '#BC7D4E', '#C08751', '#C49154', '#C79B57', '#CBA55A', '#CEAF5D'],
+                                          }]
+                                        };
+                                        const config_expenses_bar = {
+                                            type: 'bar',
+                                            data: data,
+                                            options: {
+                                              maintainAspectRatio: false,
+                                              scales: {
+                                                y: {
+                                                  beginAtZero: true
+                                                }
+                                              }
+                                            },
+                                        };
+
+                                      expensesBarChart = new Chart(
+                                        document.getElementById('expensesBarChart'),
+                                        config_expenses_bar
+                                      );
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Expenses Sources</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="expensesPieChart"></canvas>
+                                    </div>
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    <script>
+                                      data = {
+                                        labels: [{% for category in sum_of_expenses_in_category %} '{{ category }}',  {% endfor %}],
+                                        datasets: [{
+                                          data: [{% for category in sum_of_expenses_in_category %} '{{ category.expense__expense_value__sum }}',  {% endfor %}],
+                                          backgroundColor: ['#FFCF56', '#F26419', '#F6AE2D', '#CD5334', '#EDB88B', '#F58F29', '#fff19b', '#FFA987', '#f8b96a', '#A1C181', '#ec7e52', '#e25f50', '#d43d51'],
+                                        }]
+                                      };
+
+                                      const config_expenses_pie = {
+                                        type: 'doughnut',
+                                        data: data,
+                                        options: {
+                                          maintainAspectRatio: false,
+                                          tooltips: {
+                                              backgroundColor: "rgb(255,255,255)",
+                                              bodyFontColor: "#858796",
+                                              borderColor: '#dddfeb',
+                                              borderWidth: 1,
+                                              xPadding: 15,
+                                              yPadding: 15,
+                                              displayColors: false,
+                                              caretPadding: 10,
+                                          },
+                                          legend: {
+                                            display: false
+                                          },
+                                          cutoutPercentage: 75,
+                                        },
+                                      };
+
+                                      expensesPieChart = new Chart(
+                                        document.getElementById('expensesPieChart'),
+                                        config_expenses_pie
+                                      );
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Incomes Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="incomesBarChart"></canvas>
+                                    </div>
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    <script>
+                                        labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                        data = {
+                                          labels: labels,
+                                          datasets: [{
+                                            label: "Incomes",
+                                            data: [{{ january_incomes }}, {{ february_incomes }}, {{ march_incomes }}, {{ april_incomes }}, {{ may_incomes }}, {{ june_incomes }},
+                                            {{ july_incomes }}, {{ august_incomes }}, {{ september_incomes }}, {{ october_incomes }}, {{ november_incomes }}, {{ december_incomes }}],
+                                            backgroundColor: ['#1B4018', '#205520', '#28692D', '#307D3C', '#39914E', '#42A561', '#72BD7F', '#A3D5A5', '#D7ECD5'],
+                                          }]
+                                        };
+                                        const config_incomes_bar = {
+                                            type: 'bar',
+                                            data: data,
+                                            options: {
+                                              maintainAspectRatio: false,
+                                              scales: {
+                                                y: {
+                                                  beginAtZero: true
+                                                }
+                                              }
+                                            },
+                                        };
+
+                                      incomesBarChart = new Chart(
+                                        document.getElementById('incomesBarChart'),
+                                        config_incomes_bar
+                                      );
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Incomes Sources</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                    <canvas id="incomesPieChart"></canvas>
+                                    </div>
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    <script>
+                                      data = {
+                                        labels: [{% for category in sum_of_incomes_in_category %} '{{ category }}',  {% endfor %}],
+                                        datasets: [{
+                                          data: [{% for category in sum_of_incomes_in_category %} '{{ category.income__income_value__sum }}',  {% endfor %}],
+                                          backgroundColor: ['#00876c', '#90C290', '#f39c5b', '#F4D35E', '#EE964B', '#409a70', '#7C72A0', '#67ac75', '#8cbe7b', '#b2d083', '#d8e18d', '#fff19b', '#fcd580', '#f8b96a', '#ec7e52', '#e25f50', '#d43d51'],
+                                        }]
+                                      };
+
+                                      const config_incomes_pie = {
+                                        type: 'doughnut',
+                                        data: data,
+                                        options: {
+                                          maintainAspectRatio: false,
+                                          tooltips: {
+                                              backgroundColor: "rgb(255,255,255)",
+                                              bodyFontColor: "#858796",
+                                              borderColor: '#dddfeb',
+                                              borderWidth: 1,
+                                              xPadding: 15,
+                                              yPadding: 15,
+                                              displayColors: false,
+                                              caretPadding: 10,
+                                          },
+                                          legend: {
+                                            display: false
+                                          },
+                                          cutoutPercentage: 75,
+                                        },
+                                      };
+                                    </script>
+
+                                    <script>
+                                      incomesPieChart = new Chart(
+                                        document.getElementById('incomesPieChart'),
+                                        config_incomes_pie
+                                      );
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Expenses vs Incomes Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="expensesvsincomesBarChart"></canvas>
+                                    </div>
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    <script>
+                                        labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                        data = {
+                                          labels: labels,
+                                          datasets: [{
+                                            label: "Expenses",
+                                            data: [{{ january_expenses }}, {{ february_expenses }}, {{ march_expenses }}, {{ april_expenses }}, {{ may_expenses }}, {{ june_expenses }},
+                                            {{ july_expenses }}, {{ august_expenses }}, {{ september_expenses }}, {{ october_expenses }}, {{ november_expenses }}, {{ december_expenses }}],
+                                            backgroundColor: ['#9E3E3C', '#A3463E', '#AC5743', '#A74F40', '#B06045', '#B46A48', '#B8734B', '#BC7D4E', '#C08751', '#C49154', '#C79B57', '#CBA55A', '#CEAF5D'],
+                                          },
+                                          {
+                                            label: "Incomes",
+                                            data: [{{ january_incomes }}, {{ february_incomes }}, {{ march_incomes }}, {{ april_incomes }}, {{ may_incomes }}, {{ june_incomes }},
+                                            {{ july_incomes }}, {{ august_incomes }}, {{ september_incomes }}, {{ october_incomes }}, {{ november_incomes }}, {{ december_incomes }}],
+                                            backgroundColor: ['#1B4018', '#205520', '#28692D', '#307D3C', '#39914E', '#42A561', '#72BD7F', '#A3D5A5', '#D7ECD5'],
+                                          }]
+                                        };
+                                        const config_expensesvsincomes_bar = {
+                                            type: 'bar',
+                                            data: data,
+                                            options: {
+                                              maintainAspectRatio: false,
+                                              scales: {
+                                                y: {
+                                                  beginAtZero: true
+                                                }
+                                              }
+                                            },
+                                        };
+                                      expensesvsincomesBarChart = new Chart(
+                                        document.getElementById('expensesvsincomesBarChart'),
+                                        config_expensesvsincomes_bar
+                                      );
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 mb-4">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Wee 2022</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/vendor/jquery/jquery.min.js">
+
+
+    </script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="/static/js/sb-admin-2.min.js"></script>
+
+    <script src="/static/vendor/chart.js/Chart.min.js"></script>
+
+    <script src="/static/js/demo/chart-area-demo.js"></script>
+    <script src="/static/js/demo/chart-pie-demo.js"></script>
+
+
+</body>
+</html>

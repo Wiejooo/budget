@@ -1,0 +1,16 @@
+{% extends 'user_manager/base.html' %}
+{% block site_title %} New category {% endblock %}
+{% block page_heading %} Add new category {% endblock page_heading %}
+
+{% block content %}
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'income_category_list' %}">
+        <input type="submit" class="btn btn-primary" value="Save">
+    </a>
+<a href="{% url 'income_category_list' %}" class="btn btn-primary">Cancel</a>
+</form>
+
+{% endblock content %}
